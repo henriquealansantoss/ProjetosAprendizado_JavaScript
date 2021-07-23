@@ -1,4 +1,3 @@
-
 // initial data
 let currentColor = 'black';
 let canDraw = false;
@@ -17,11 +16,11 @@ document.querySelectorAll('.colorArea .color').forEach(item => {
 screen.addEventListener('mousedown', mouseDownEvent);
 screen.addEventListener('mousemove', mouseMoveEvent);
 screen.addEventListener('mouseup', mouseUpEvent);
-
+document.querySelector('.clear').addEventListener('click', cleanScreen);
 
 
 // functions
-function colorClickEvent(e){
+function colorClickEvent(e) {
     let color = e.target.getAttribute('data-color');
     currentColor = color;
 
@@ -31,26 +30,26 @@ function colorClickEvent(e){
 }
 
 
-function mouseDownEvent(){
-  canDraw = true;
-  mouseX = e.pageX - screen.offsetLeft;
-  mouseY = e.pageY - screen.offsetTop;
+function mouseDownEvent(e) {
+    canDraw = true;
+    mouseX = e.pageX - screen.offsetLeft;
+    mouseY = e.pageY - screen.offsetTop;
 }
 
-function mouseMoveEvent(){
-    canDraw= false;
+function mouseMoveEvent(e) {
+    if (canDraw) {
+        //    let pointX = e.pageX - screen.offsetLeft;
+        //    let pointY = e.pageY - screen.offsetTop;
+        draw(e.pageX, e.pageY)
+
+    }
 }
 
-function mouseUpEvent(e){
-   if(canDraw){
-    //    let pointX = e.pageX - screen.offsetLeft;
-    //    let pointY = e.pageY - screen.offsetTop;
-    draw(e.pageX, e.pageY)
-
-   }
+function mouseUpEvent(e) {
+    canDraw = false;
 }
 
-function draw(x,y){
+function draw(x, y) {
     let pointX = x - screen.offsetLeft;
     let pointY = y - screen.offsetTop;
 
@@ -59,14 +58,19 @@ function draw(x,y){
     ctx.beginPath();
     ctx.lineWidth = 5;
     ctx.lineJoin = "round";
-    ctx.moveTo(mouseX,mouseY);
+    ctx.moveTo(mouseX, mouseY);
     ctx.lineTo(pointX, pointY);
     ctx.closePath();
     ctx.strokeStyle = currentColor;
     ctx.stroke();
 
-    
+
     mouseX = pointX;
     mouseY = pointY;
 
+}
+
+function cleanScreen() {
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.clearRect(0,0,ctx.canvas.width, ctx.canvas.height);
 }
