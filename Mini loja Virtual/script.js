@@ -43,8 +43,11 @@ let atualizarCarrinho = () => {
     itens.map((val) => {
         if(val.quantidade > 0){
             containerCarrinho.innerHTML += `
-            <p>`+val.nome+` | quantidade: `+val.quantidade+`</p>
-            <hr>
+            <div class="info-single-checkout">
+            <p style="float:left;"> Produto: `+val.nome+`</p>
+            <p style="float:right;"> Quantidade: `+val.quantidade+`</p>
+            <div style="clear:both"></div>
+            </div>
         `
         }
         
