@@ -106,11 +106,11 @@ copyEl.addEventListener('click', ()=>{
         return ""
     }
 
-    textArea.value = password;
+    textarea.value = password;
     document.body.appendChild(textarea);
-    textArea.select();
+    textarea.select();
     document.execCommand("copy");
-    textArea.remove();
+    textarea.remove();
     alert("Copiado");
 })
 
