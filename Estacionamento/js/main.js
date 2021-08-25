@@ -7,6 +7,11 @@ function cadastraVeiculo(event) {
     let placa = document.querySelector('#placaCarro').value;
     let time = new Date();
 
+    if(!modelCarro && !placa){
+        alert('Informe os dados antes de adicionar!');
+        return false;
+    }
+
     carro = {
         modelo: modelCarro,
         placa: placa,
@@ -14,6 +19,7 @@ function cadastraVeiculo(event) {
         minutos: time.getMinutes(),
         segundos: time.getSeconds()
     }
+
 
 
     if (localStorage.getItem('patio') === null) {
@@ -29,6 +35,21 @@ function cadastraVeiculo(event) {
     mostrarPatio();
 
 }
+
+function apagarVeiculo(placa){
+    let carros = JSON.parse(localStorage.getItem('patio'));
+
+    for(let i = 0; i < carros.length; i++){
+        if(carros[i].placa === placa){
+            carros.splice(i,1);
+        }
+
+        localStorage.setItem('patio', JSON.stringify(carros));
+    }
+
+    mostrarPatio();
+}
+
 
 function mostrarPatio() {
     let carros = JSON.parse(localStorage.getItem('patio'));
@@ -49,6 +70,7 @@ function mostrarPatio() {
                                 <td> ${modelo} </td>
                                 <td> ${placa} </td>
                                 <td> ${hora}:${minutos}:${segundos}</td>
+                                <td><button class="btn btn-danger" onclick ="apagarVeiculo('${placa}')">Excluir</button></td>
                                 </tr>
                                 `;
     }
