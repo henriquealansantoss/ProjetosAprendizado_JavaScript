@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@1,600&display=swap');
+
+:root {
+    --color-primary: #3F5267;
+    --color-second: #D5D5D5;
+    --color-font: #e8edf1;
+    --font-primary: 'Open Sans', sans-serif;
+}
+
+.jumbotron-fluid {
+    background-color: var(--color-primary);
+}
+
+#titular-new-reminder {
+    color: var(--color-primary);
+}
+
+#titular-tarefas {
+    color: var(--color-primary);
+}
+
+.display-3, .lead {
+    font-family: var(--font-primary);
+    color: var(--color-font);
+}
