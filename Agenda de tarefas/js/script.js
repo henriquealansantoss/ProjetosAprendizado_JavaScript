@@ -63,15 +63,15 @@ function criarLembrete() {
 }
 
 //função para verificar se existe o lembrete
-function comprovarRecordatorio(recordatorio){
+function comprovarRecordatorio(recordatorio) {
     let recordatorioExistetes = localStorage.getItem("recordatorio");
-    if(recordatorioExistetes === null || recordatorioExistetes === ""){
+    if (recordatorioExistetes === null || recordatorioExistetes === "") {
         let recordatorios = [];
         recordatorios.push(recordatorio);
 
         //salvar recordatorio
         saveRecordatorios(recordatorios);
-    }else{
+    } else {
         let recordatoriosRecuperados = JSON.parse(recordatorioExistetes);
 
         //salvar
@@ -83,20 +83,59 @@ function comprovarRecordatorio(recordatorio){
 
 
 //função para salva
-function saveRecordatorios(recordatorios){
+function saveRecordatorios(recordatorios) {
     let recordatoriosJSON = JSON.stringify(recordatorios);
-    localStorage.setItem("re",recordatoriosJSON);
+    localStorage.setItem("re", recordatoriosJSON);
 }
 
 //função para exibir itens
-function mostrarRecordatorios(){
+function mostrarRecordatorios() {
     let html = "";
     let recordatorioExistetes = localStorage.getItem("recordatorios");
-    if(recordatorioExistetes === null || recordatorioExistetes === ""){
+    if (recordatorioExistetes === null || recordatorioExistetes === "") {
         html = "Não existe nenhum lembrete...";
 
-        document.getElementById('recordatorios').innerHTML = ;
+
+        document.getElementById('recordatorios').innerHTML = html;
+    } else {
+        let recordatoriosRecuperados = JSON.parse(recordatorioExistetes);
+        for (let i = 0; i < recordatoriosRecuperados.lenght; i++) {
+            html += formartarRecordatorio(recordatoriosRecuperados[i]);
+        }
+        document.querySelector("#recordatorios").innerHTML = html;
     }
 
-
 }
+
+//função para exibir os lembretes
+function formartarRecordatorio(recordatorio) {
+    let html = "";
+    html += `<div class="recordatorio" id="${recordatorio.id}">`;
+    html += `<div class="row">`;
+    html += `<div class="col-6 text-left" >`;
+    html += `<small><i class="fa fa-calendar-alt" aria-hidden="true"></i> ${recordatorio.data}</small>`;
+    html += `</div>`;
+    html += `<div class="col-6 text-right">`;
+    html += `<small><i class="fa fa-window-close" aria-hidden="true"></i></small>`;
+    html += `</div>`;
+    html += `</div>`;
+    html += `<br>`;
+    html += `<div class="row">`;
+    html += `<div class="col-12">`;
+    html += `${recordatorio.texto}`; 
+    html += `</div>`;
+    html += `</div>`;
+    html += `</div>`;
+    html += `<br> `
+
+    return html;
+}
+
+//comprovar se está tudo ok...
+document.addEventListener('DOMContentLoaded', function () {
+    // console.log(this);
+
+    // mostrarError();
+    document.getElementById('buttonSave').onclick = criarLembrete;
+    mostrarRecordatorios();
+});
